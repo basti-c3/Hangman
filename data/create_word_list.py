@@ -1,5 +1,4 @@
 from data.useful_things import *
-from datetime import datetime
 
 
 def read_and_return_hangman_word_set(file):
@@ -35,9 +34,3 @@ def _word_is_clean(word):
 
 def _transform_to_hangman_format(word):
     return word.upper().replace('Ä', 'AE').replace('Ü', 'UE').replace('Ö', 'OE')
-
-
-def write_words_in_file(word_set):
-    word_file = open('data/word_list_' + str(datetime.now()) + '.txt', 'w')
-    for word in word_set:
-        word_file.write(word + ';')
