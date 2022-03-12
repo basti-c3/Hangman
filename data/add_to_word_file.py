@@ -1,4 +1,4 @@
-from data.useful_things import *
+from useful_things import *
 from data.create_word_list import read_and_return_hangman_word_set
 
 
@@ -6,6 +6,7 @@ def add_words_to_file(new_words_file, word_file=''):
     if word_file != '':
         file = open(word_file)
         word_set = set(file.readline().split(';')[0:-1])
+        file.close()
     else:
         word_set = set()
         word_file = 'data/words.txt'
