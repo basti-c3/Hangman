@@ -20,7 +20,6 @@ def get_possible_words(already_guessed_letters: list[str], already_guessed_word:
         raise Exception('There are no possible words left anymore. Should be impossible')
 
     if '_' not in already_guessed_word:
-        print('The word has nothing left to guess')
         return [already_guessed_word]
 
     possible_letters = set(Hangman_Alphabet).difference(already_guessed_letters)
