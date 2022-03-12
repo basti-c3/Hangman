@@ -2,25 +2,30 @@ from useful_things import *
 import re
 
 
-def get_same_length_words(word_length: int, word_list: list):
-    # TODO: Also dashes have to be at the same places
-    return set(filter(lambda word: len(word) == word_length, word_list))
+def get_same_length_words_considering_dashes(hangman_word: str, word_list: list[str]):
+    word_length = len(hangman_word)
+    dash_indices = set(substr.start() for substr in re.finditer('-', hangman_word))
+
+    return list(filter(lambda word:
+                       word_length == len(word) and
+                       dash_indices == set(substr.start() for substr in re.finditer('-', word)),
+                       word_list))
 
 
-def get_possible_words(already_guessed_word: str, word_list: list):
+def get_possible_words(already_guessed_letters: list[str], already_guessed_word: str, word_list: list[str]):
     if len(word_list) == 0:
         raise Exception('There are no possible words left anymore. Should be impossible')
-    random_word_from_set = random.sample(word_list, 1)[0]
-    if len(already_guessed_word) != len(random_word_from_set):
-        raise Exception(f'The length of the word {random_word_from_set} does not equal the length'
-                        f'of the searched word {already_guessed_word}')
+
     if '_' not in already_guessed_word:
         print('The word has nothing left to guess')
-        return set(already_guessed_word)
-    alphabet_regex = '[A-Z]'
-    regex = already_guessed_word.replace('_', alphabet_regex)
-    return list(filter(lambda word: _word_contains_regex(word, regex), word_list))
+        return [already_guessed_word]
+
+    possible_letters = set(Hangman_Alphabet).difference(already_guessed_letters)
+    possible_letters_regex = '[' + ','.join(possible_letters) + ']'
+    word_with_regex_at_blanks = already_guessed_word.replace('_', possible_letters_regex)
+
+    return list(filter(lambda word: _contains_regex(word, word_with_regex_at_blanks), word_list))
 
 
-def _word_contains_regex(word: str, regex: str):
+def _contains_regex(word: str, regex: str):
     return bool(re.match(regex, word))
