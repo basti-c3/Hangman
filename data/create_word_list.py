@@ -6,12 +6,12 @@ def read_and_return_hangman_word_set(file):
     for line in open(file):
         first_index_of_word = 0
         line_length = len(line)
-        while line[first_index_of_word].lower() not in alphabet:
+        while line[first_index_of_word].lower() not in allowed_characters:
             first_index_of_word += 1
             if first_index_of_word == line_length:
                 break
         last_index_of_word = len(line) - 1
-        while line[last_index_of_word].lower() not in alphabet:
+        while line[last_index_of_word].lower() not in allowed_characters:
             last_index_of_word -= 1
             if last_index_of_word == 0:
                 break
@@ -27,7 +27,7 @@ def _word_is_clean(word):
     if word == '':
         return False
     for letter in word:
-        if letter.lower() not in alphabet and letter != "-":
+        if letter.lower() not in allowed_characters and letter != "-":
             return False
     return True
 

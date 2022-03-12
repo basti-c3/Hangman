@@ -2,6 +2,7 @@ from useful_things import *
 from data.create_word_list import read_and_return_hangman_word_set, write_words_in_file
 from data.add_to_word_file import add_words_to_file
 from Algorithm.get_possible_words import get_same_length_words, get_possible_words
+from Algorithm.determine_most_probable_letter import determine_most_probable_letter
 
 
 def main():
@@ -22,6 +23,9 @@ def main():
     already_guessed_word = '_E_NE'
     possible_words = get_possible_words(already_guessed_word=already_guessed_word, word_list=same_length_words)
     print(possible_words)
+    print(f'There are {len(possible_words)} possible words left.')
+    next_letter = determine_most_probable_letter(already_guessed_word=already_guessed_word, word_list=possible_words)
+    print(next_letter)
 
 
 if __name__ == '__main__':
