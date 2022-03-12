@@ -18,4 +18,4 @@ def get_words_from_word_file(file: str):
     file = open(file)
     word_set = set(file.readline().split(';')[0:-1])
     file.close()
-    return word_set
+    return list(word_set)
