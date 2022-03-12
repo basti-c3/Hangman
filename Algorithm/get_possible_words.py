@@ -2,14 +2,17 @@ from useful_things import *
 import re
 
 
-def get_same_length_words_considering_dashes(hangman_word: str, word_list: list[str]):
-    word_length = len(hangman_word)
+def get_words_of_given_length(word_length: int, word_list: list[str]):
+    return list(filter(lambda word: len(word) == word_length, word_list))
+
+
+def get_possible_words_considering_dashes(hangman_word: str, word_list: list[str]):
     dash_indices = set(substr.start() for substr in re.finditer('-', hangman_word))
 
-    return list(filter(lambda word:
-                       word_length == len(word) and
-                       dash_indices == set(substr.start() for substr in re.finditer('-', word)),
-                       word_list))
+    return list(filter(
+        lambda word: dash_indices == set(substr.start() for substr in re.finditer('-', word)),
+        word_list)
+    )
 
 
 def get_possible_words(already_guessed_letters: list[str], already_guessed_word: str, word_list: list[str]):
