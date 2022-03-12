@@ -1,4 +1,4 @@
-from data.useful_things import *
+from useful_things import *
 
 
 def read_and_return_hangman_word_set(file):
