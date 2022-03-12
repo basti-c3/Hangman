@@ -2,7 +2,7 @@ from useful_things import *
 
 
 def determine_most_probable_letter(already_guessed_word: str, word_list: list[str]):
-    local_alphabet = alphabet.copy()
+    local_alphabet = Hangman_Alphabet.copy()
     joined_string = ''.join(word_list)
     for already_guessed_letter in already_guessed_word:
         if already_guessed_letter in local_alphabet:  # Not _ and not -
