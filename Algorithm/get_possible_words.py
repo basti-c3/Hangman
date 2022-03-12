@@ -3,6 +3,7 @@ import re
 
 
 def get_same_length_words(word_length: int, word_list: list):
+    # TODO: Also dashes have to be at the same places
     return set(filter(lambda word: len(word) == word_length, word_list))
 
 
@@ -18,7 +19,7 @@ def get_possible_words(already_guessed_word: str, word_list: list):
         return set(already_guessed_word)
     alphabet_regex = '[A-Z]'
     regex = already_guessed_word.replace('_', alphabet_regex)
-    return set(filter(lambda word: _word_contains_regex(word, regex), word_list))
+    return list(filter(lambda word: _word_contains_regex(word, regex), word_list))
 
 
 def _word_contains_regex(word: str, regex: str):
