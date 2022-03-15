@@ -14,7 +14,7 @@ def main():
     word_list = get_words_from_word_file(file=words_stored_file)
     hangman_word = random.sample(word_list, 1)[0]
 
-    iterate_hangman_with_weight_updates()
+    optimized_word_weights = iterate_hangman_with_weight_updates()
 
     end_time = datetime.now()
     print('The program took', end_time - start_time, 'time to run through')
