@@ -15,11 +15,15 @@ def write_words_in_file(word_set, file):
     word_file.close()
 
 
-def get_words_from_word_file(file: str):
+def get_words_of_given_length_from_word_file(file: str, word_length: int):
     file = open(file)
     word_set = set(file.readline().split(';')[0:-1])
     file.close()
-    return list(word_set)
+    return get_words_of_given_length(word_length, word_set)
+
+
+def get_words_of_given_length(word_length: int, words):
+    return list(filter(lambda word: len(word) == word_length, words))
 
 
 def put_in_next_letter(hangman_word, already_guessed_word, next_letter):

@@ -2,10 +2,6 @@ from useful_things import *
 import re
 
 
-def get_words_of_given_length(word_length: int, word_list: list[str]):
-    return list(filter(lambda word: len(word) == word_length, word_list))
-
-
 def get_possible_words_considering_dashes(hangman_word: str, word_list: list[str]):
     dash_indices = set(substr.start() for substr in re.finditer('-', hangman_word))
 
