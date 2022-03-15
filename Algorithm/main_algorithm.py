@@ -1,6 +1,6 @@
-from Weights.initial_weights import get_initial_weights
-from Weights.weight_update import update_weights
-from Game.play_hangman import play_all_words_with_given_length
+from Algorithm.Weights.initial_weights import get_initial_weights
+from Algorithm.Weights.weight_update import update_weights
+from Algorithm.Game.play_hangman import play_all_words_with_given_length
 
 
 def iterate_hangman_with_weight_updates(max_iterations: int, initial_step_length: int, max_wrong_guesses: int,
@@ -18,6 +18,7 @@ def iterate_hangman_with_weight_updates(max_iterations: int, initial_step_length
             max_wrong_guesses=max_wrong_guesses,
             word_weights=current_word_weights,
         )
+
         current_word_weights = update_weights(
             word_weights=current_word_weights,
             wrong_guess_dict=wrong_guess_dict,

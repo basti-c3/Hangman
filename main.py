@@ -6,7 +6,7 @@ def main():
     start_time = datetime.now()
     words_stored_file = 'data/words.txt'
     max_wrong_guesses = 9
-    hangman_word_length = 2
+    hangman_word_length = 30
     initial_weight_update_step_length = 10
     max_weight_update_iterations = 20
 
@@ -38,6 +38,7 @@ def main():
     end_time = datetime.now()
     print('The program took', end_time - start_time, 'time to run through')
 
-    if __name__ == '__main__':
-        main()
-        # yeet
+
+if __name__ == '__main__':
+    main()
+    # yeet

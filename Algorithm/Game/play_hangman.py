@@ -1,13 +1,12 @@
 from useful_things import *
 import re
-from get_possible_words import get_words_of_given_length, get_possible_words, \
-    get_possible_words_considering_dashes
-from determine_most_probable_letter import determine_most_probable_letter
+from Algorithm.Game.get_possible_words import get_possible_words, get_possible_words_considering_dashes
+from Algorithm.Game.determine_most_probable_letter import determine_most_probable_letter
 
 
 # Returns wrong guess count
 def play_hangman(hangman_word: str, same_length_word_list: list[str], max_wrong_guesses: int,
-                  word_weights: dict[str, float]):
+                 word_weights: dict[str, float]):
     wrong_guess_count = 0
     already_guessed_letters = []
 
