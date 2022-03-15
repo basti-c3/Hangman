@@ -1,8 +1,7 @@
 from useful_things import *
 from data.create_word_list import read_and_return_hangman_word_set, write_words_in_file
 from data.add_to_word_file import add_words_to_file
-from Algorithm.play_hangman import play_hangman, play_all_words_with_given_length
-
+from Algorithm.main_algorithm import *
 
 def main():
     start_time = datetime.now()
@@ -15,14 +14,7 @@ def main():
     word_list = get_words_from_word_file(file=words_stored_file)
     hangman_word = random.sample(word_list, 1)[0]
 
-    # Currently just giving every word the weight 1.0 - Attention: value has to be float!
-    current_word_weights = {word: 1.0 for word in word_list}
-    play_all_words_with_given_length(
-        hangman_word_length=hangman_word_length,
-        word_list=word_list,
-        max_wrong_guesses=max_wrong_guesses,
-        word_weights=current_word_weights,
-    )
+    iterate_hangman_with_weight_updates()
 
     end_time = datetime.now()
     print('The program took', end_time - start_time, 'time to run through')
