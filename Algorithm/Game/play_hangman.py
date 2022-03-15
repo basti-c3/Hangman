@@ -1,8 +1,7 @@
 from useful_things import *
 import re
-from Algorithm.get_possible_words import get_words_of_given_length, get_possible_words, \
-    get_possible_words_considering_dashes
-from Algorithm.determine_most_probable_letter import determine_most_probable_letter
+from Algorithm.Game.get_possible_words import get_possible_words, get_possible_words_considering_dashes
+from Algorithm.Game.determine_most_probable_letter import determine_most_probable_letter
 
 
 # Returns wrong guess count
@@ -44,23 +43,19 @@ def play_hangman(hangman_word: str, same_length_word_list: list[str], max_wrong_
     return wrong_guess_count
 
 
-def play_all_words_with_given_length(hangman_word_length: int, word_list: list[str], max_wrong_guesses: int,
+def play_all_words_with_given_length(word_list: list[str], max_wrong_guesses: int,
                                      word_weights: dict[str, float]):
-    same_length_word_list = get_words_of_given_length(word_length=hangman_word_length, word_list=word_list)
-    if len(same_length_word_list) == 0:
+    if len(word_list) == 0:
         raise Exception('No words were found')
 
-    print(f'There are {len(same_length_word_list)} words of the given length of {hangman_word_length}')
-    weight_dict = {}
-    for word in same_length_word_list:
+    wrong_guess_count_dict = {}
+    for word in word_list:
         wrong_guess_count = play_hangman(
             hangman_word=word,
-            same_length_word_list=same_length_word_list,
+            same_length_word_list=word_list,
             max_wrong_guesses=max_wrong_guesses,
             word_weights=word_weights,
         )
-        weight_dict[word] = wrong_guess_count
-        
-    mean_value_of_wrong_guesses = sum(weight_dict.values()) / len(same_length_word_list)
-    print(f'Es ergibt sich ein mittlerer Wert an wrong guesses von {mean_value_of_wrong_guesses}.')
-    return weight_dict
+        wrong_guess_count_dict[word] = wrong_guess_count
+
+    return wrong_guess_count_dict
