@@ -1,16 +1,22 @@
 from useful_things import *
 
 
-def determine_most_probable_letter(word_list: list[str], already_guessed_letters: list[str]):
-    local_alphabet = Hangman_Alphabet.copy()
-    joined_string = ''.join(word_list)
-    for already_guessed_letter in already_guessed_letters:
-        if already_guessed_letter in local_alphabet:  # Not _ and not -
-            local_alphabet.remove(already_guessed_letter)
-            joined_string = joined_string.replace(already_guessed_letter, '')
+def determine_most_probable_letter(word_list: list[str], already_guessed_letters: list[str],
+                                   word_weights: dict[str, float]):
+    letter_weight = {}
+    for possible_letter in Hangman_Alphabet:
+        if possible_letter in already_guessed_letters:
+            continue
+        letter_weight[possible_letter] = 0
+        for word in word_list:
+            if possible_letter in word:
+                try:
+                    letter_weight[possible_letter] += math.exp(word_weights[word])
+                except KeyError:
+                    print(f"The word {word} has no given weight, maybe something in the code is incorrect?"
+                          f"Code ignores word for now")
 
-    frequency_distribution = {letter: joined_string.count(letter) for letter in local_alphabet}
-    most_probable_letters_sorted = sorted(frequency_distribution.keys(),
-                                          key=lambda letter: frequency_distribution[letter],
-                                          reverse=True)
-    return most_probable_letters_sorted[0]
+    letters_sorted_by_weights = sorted(letter_weight.keys(),
+                                       key=lambda letter: letter_weight[letter],
+                                       reverse=True)
+    return letters_sorted_by_weights[0]

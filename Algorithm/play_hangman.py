@@ -6,7 +6,8 @@ from Algorithm.determine_most_probable_letter import determine_most_probable_let
 
 
 # Returns wrong guess count
-def play_hangman(hangman_word: str, same_length_word_list: list[str], max_wrong_guesses: int):
+def play_hangman(hangman_word: str, same_length_word_list: list[str], max_wrong_guesses: int,
+                 word_weights: dict[str, float]):
     wrong_guess_count = 0
     already_guessed_letters = []
 
@@ -22,6 +23,7 @@ def play_hangman(hangman_word: str, same_length_word_list: list[str], max_wrong_
         next_letter = determine_most_probable_letter(
             word_list=possible_words,
             already_guessed_letters=already_guessed_letters,
+            word_weights=word_weights,
         )
         already_guessed_letters.append(next_letter)
 
@@ -42,7 +44,8 @@ def play_hangman(hangman_word: str, same_length_word_list: list[str], max_wrong_
     return wrong_guess_count
 
 
-def play_all_words_with_given_length(hangman_word_length: int, word_list: list[str], max_wrong_guesses: int):
+def play_all_words_with_given_length(hangman_word_length: int, word_list: list[str], max_wrong_guesses: int,
+                                     word_weights: dict[str, float]):
     same_length_word_list = get_words_of_given_length(word_length=hangman_word_length, word_list=word_list)
     if len(same_length_word_list) == 0:
         raise Exception('No words were found')
@@ -50,9 +53,14 @@ def play_all_words_with_given_length(hangman_word_length: int, word_list: list[s
     print(f'There are {len(same_length_word_list)} words of the given length of {hangman_word_length}')
     weight_dict = {}
     for word in same_length_word_list:
-        wrong_guess_count = play_hangman(word, same_length_word_list, max_wrong_guesses)
+        wrong_guess_count = play_hangman(
+            hangman_word=word,
+            same_length_word_list=same_length_word_list,
+            max_wrong_guesses=max_wrong_guesses,
+            word_weights=word_weights,
+        )
         weight_dict[word] = wrong_guess_count
-
+        
     mean_value_of_wrong_guesses = sum(weight_dict.values()) / len(same_length_word_list)
     print(f'Es ergibt sich ein mittlerer Wert an wrong guesses von {mean_value_of_wrong_guesses}.')
     return weight_dict
