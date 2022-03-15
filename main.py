@@ -8,15 +8,21 @@ def main():
     start_time = datetime.now()
     words_stored_file = 'data/words.txt'
     max_wrong_guesses = 9
-    hangman_word_length = 3
+    hangman_word_length = 2
     # new_words_file = "data/deu_news_2020_300K-words.txt"
     # add_words_to_file(new_words_file, word_file=words_stored_file)
 
     word_list = get_words_from_word_file(file=words_stored_file)
     hangman_word = random.sample(word_list, 1)[0]
 
-    play_all_words_with_given_length(hangman_word_length=hangman_word_length, word_list=word_list,
-                                     max_wrong_guesses=max_wrong_guesses)
+    # Currently just giving every word the weight 1.0 - Attention: value has to be float!
+    current_word_weights = {word: 1.0 for word in word_list}
+    play_all_words_with_given_length(
+        hangman_word_length=hangman_word_length,
+        word_list=word_list,
+        max_wrong_guesses=max_wrong_guesses,
+        word_weights=current_word_weights,
+    )
 
     end_time = datetime.now()
     print('The program took', end_time - start_time, 'time to run through')
